@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+}
+
+:root {
+  --canvas: #f4f6f5;
+  --surface: #ffffff;
+  --ink: #121816;
+  --muted: #5c6b64;
+  --line: #d8e0dc;
+  --accent: #0f7a5f;
+  --accent-fg: #ffffff;
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: #0b0f0d;
+  --surface: #121816;
+  --ink: #eef3f0;
+  --muted: #9aaba3;
+  --line: #24302b;
+  --accent: #3ecf9a;
+  --accent-fg: #0b0f0d;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 35%, transparent);
+  color: var(--ink);
+}
+
+/* Atmospheric background — soft grid + wash, no neon glow */
+.bg-atmosphere {
+  background-color: var(--canvas);
+  background-image:
+    radial-gradient(
+      900px 500px at 10% -10%,
+      color-mix(in oklab, var(--accent) 12%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 420px at 95% 8%,
+      color-mix(in oklab, var(--accent) 8%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent,
+      transparent 40%,
+      color-mix(in oklab, var(--surface) 55%, transparent)
+    ),
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    auto,
+    64px 64px,
+    64px 64px;
+  background-position: center top;
+}
+
+.dark .bg-atmosphere {
+  background-image:
+    radial-gradient(
+      900px 500px at 10% -10%,
+      color-mix(in oklab, var(--accent) 10%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 420px at 95% 8%,
+      color-mix(in oklab, var(--accent) 7%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent,
+      transparent 40%,
+      color-mix(in oklab, var(--surface) 40%, transparent)
+    ),
+    linear-gradient(color-mix(in oklab, var(--line) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--line) 70%, transparent) 1px,
+      transparent 1px
+    );
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
